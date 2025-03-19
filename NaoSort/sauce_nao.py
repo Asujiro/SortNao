@@ -21,7 +21,7 @@ class SauceNao:
         return cleaned_name.rstrip('_')
 
     def move_image(self, image_path, character_name):
-        folder_name = "unknown" if character_name == "Unbekannter Charakter" else self.clean_folder_name(character_name)
+        folder_name = "unknown" if character_name == "Unknown character" else self.clean_folder_name(character_name)
         target_folder = os.path.join(self.output_folder, folder_name)
         os.makedirs(target_folder, exist_ok=True)
 
@@ -35,7 +35,7 @@ class SauceNao:
             count += 1
 
         shutil.move(image_path, target_path)
-        print(f"Bild verschoben nach: {target_path}")
+        print(f"Image moved to: {target_path}")
 
     def process_images_from_folder(self, folder_path):
         while True:
@@ -46,7 +46,7 @@ class SauceNao:
                 if image_path in self.processed_files:
                     continue
 
-                print(f"Verarbeite Datei: {image_path}")
+                print(f"Process file: {image_path}")
 
                 if image_path.lower().endswith(('.gif', '.webp')) and is_animated(image_path):
                     move_to_gifs_folder(image_path, self.output_folder)
@@ -54,15 +54,15 @@ class SauceNao:
                     continue
 
                 response, final_image_path = self.request_handler.request(image_path)
-                character_name = self.parse_response(response) if response else "Unbekannter Charakter"
+                character_name = self.parse_response(response) if response else "Unknown character"
                 self.move_image(final_image_path, character_name)
 
                 self.processed_files.add(final_image_path)
 
-                print(f"Warte {self.rate_limit_time} Sekunden...")
+                print(f"Wait {self.rate_limit_time} seconds...")
                 time.sleep(self.rate_limit_time)
 
-            print("Warte auf neue Dateien...")
+            print("Wait for new files...")
             time.sleep(10)
 
     def parse_response(self, response):
@@ -84,8 +84,8 @@ class SauceNao:
                 best_character = character_name
 
         if best_character:
-            print(f"Erkannter Charakter: {best_character} ({highest_similarity}%)")
+            print(f"Recognized character: {best_character} ({highest_similarity}%)")
             return best_character
         else:
-            print("Nichts erkannt - Bild wird als 'unknown' einsortiert.")
-            return "Unbekannter Charakter"
+            print("Nothing recognized - image is sorted as 'unknown'.")
+            return "Unknown character"

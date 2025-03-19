@@ -4,15 +4,15 @@ from sauce_nao import SauceNao
 
 def main():
     # Konfiguration
-    api_key = "652ac85e1fc1147b1d127ab68a557381dbb61910"
-    folder_path = "/home/imagesort/sort/NaoSort/ImagesToSort"
-    output_folder = "/home/imagesort/sort/NaoSort/SortedImages"
-    temp_folder = "/home/imagesort/sort/NaoSort/TempSorted"
+    api_key = ""
+    folder_path = ""
+    output_folder = ""
+    temp_folder = ""
 
-    # Ordner erstellen, falls nicht vorhanden
+    # Create folder if not available
     os.makedirs(temp_folder, exist_ok=True)
 
-    # SauceNao-Instanz erstellen und starten
+    # Create and start SauceNao instance
     sauce_nao = SauceNao(api_key, output_folder, temp_folder)
     sauce_nao.process_images_from_folder(folder_path)
 

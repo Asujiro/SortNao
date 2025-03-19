@@ -23,7 +23,7 @@ def move_to_gifs_folder(image_path, output_folder):
         count += 1
 
     shutil.move(image_path, target_path)
-    print(f"Animierte Datei verschoben nach: {target_path}")
+    print(f"Animated file moved to: {target_path}")
 
 def convert_to_png(image_path):
     try:
@@ -33,10 +33,10 @@ def convert_to_png(image_path):
                 img.save(png_path, 'PNG')
 
                 os.remove(image_path)  # Original löschen
-                print(f"Originaldatei gelöscht: {image_path}")
+                print(f"Original file deleted: {image_path}")
 
                 return png_path
         return image_path
     except Exception as e:
-        print(f"Fehler bei der Konvertierung zu PNG: {e}")
+        print(f"Error during conversion to PNG: {e}")
         return None

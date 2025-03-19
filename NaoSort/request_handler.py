@@ -22,12 +22,12 @@ class SauceNaoRequest:
                 if response.status_code == 200:
                     return response.json(), image_path
                 elif response.status_code == 429:
-                    print("Rate Limit erreicht! Warte 24 Stunden...")
+                    print("Rate limit reached! Wait 24 hours...")
                     time.sleep(86400)
                     return self.request(image_path)
                 else:
-                    print(f"Fehler beim Abrufen der Daten: {response.status_code}")
+                    print(f"Error when retrieving the data: {response.status_code}")
                     return None, image_path
         except Exception as e:
-            print(f"Fehler bei der Anfrage: {e}")
+            print(f"Error in the request: {e}")
             return None, image_path

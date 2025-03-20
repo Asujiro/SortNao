@@ -6,14 +6,14 @@ from image_utils import is_animated, move_to_gifs_folder
 from request_handler import SauceNaoRequest
 
 class SauceNao:
-    def __init__(self, api_key, output_folder, temp_folder):
+    def __init__(self, api_key, output_folder):
         self.api_key = api_key
         self.output_folder = output_folder
-        self.temp_folder = temp_folder
         self.rate_limit_time = 30
         self.processed_files = set()
         self.request_handler = SauceNaoRequest(api_key)
-
+        self.counter = 0
+        self.shutdown_Counter = 0
     def clean_folder_name(self, name):
         cleaned_name = re.sub(r'[\\/:*?"<>|()]', '', name)
         cleaned_name = cleaned_name.replace(" ", "_")
@@ -59,11 +59,18 @@ class SauceNao:
 
                 self.processed_files.add(final_image_path)
 
-                print(f"Wait {self.rate_limit_time} seconds...")
-                time.sleep(self.rate_limit_time)
+                self.counter += 1
+                if self.counter == 4:
+                    print(f"Wait {self.rate_limit_time} seconds...")
+                    self.counter = 0
+                    time.sleep(self.rate_limit_time)
 
             print("Wait for new files...")
-            time.sleep(10)
+            self.shutdown_Counter += 1
+            if self.shutdown_Counter == 5:
+                print("No new files found. Exiting program...")
+                exit(0)
+            time.sleep(30)
 
     def parse_response(self, response):
         results = response.get('results', [])

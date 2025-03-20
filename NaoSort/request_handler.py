@@ -10,6 +10,7 @@ class SauceNaoRequest:
         self.endpoint = endpoint
 
     def request(self, image_path):
+        original_image_path = image_path
         image_path = convert_to_png(image_path) or image_path
 
         try:
@@ -22,12 +23,23 @@ class SauceNaoRequest:
                 if response.status_code == 200:
                     return response.json(), image_path
                 elif response.status_code == 429:
-                    print("Rate limit reached! Wait 24 hours...")
-                    time.sleep(86400)
-                    return self.request(image_path)
+                    self.handle_rate_limit(image_path, original_image_path)
                 else:
                     print(f"Error when retrieving the data: {response.status_code}")
                     return None, image_path
         except Exception as e:
             print(f"Error in the request: {e}")
             return None, image_path
+    
+    def handle_rate_limit(self, image_path, original_image_path):
+        print("Rate limit reached! saving currend file...")
+
+        # Here we save the PNG file in the input folder
+        input_folder = os.path.dirname(original_image_path)
+        temp_path = os.path.join(input_folder, os.path.basename(image_path))
+        shutil.move(image_path, temp_path)  # Converted PNG is moved
+        print(f"Image cached: {temp_path}")
+
+        print("Rate limit reached! Exiting program...")
+        # Close the program after saving the file and reching the rate limit
+        exit(0)

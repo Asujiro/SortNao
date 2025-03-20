@@ -1,19 +1,27 @@
+import argparse
 import os
-import time
-from sauce_nao import SauceNao  
+from sauce_nao import SauceNao
+import settings
 
 def main():
+
+    parser = argparse.ArgumentParser(description="Process input prompts.")
+    parser.add_argument('--SkipPrompts', action='store_true', help="Skip the input prompts.")
+    args = parser.parse_args()
+
+    settings.load_env(args.SkipPrompts)
+
     # Konfiguration
-    api_key = ""
-    folder_path = ""
-    output_folder = ""
-    temp_folder = ""
+    api_key = os.getenv("API_KEY")
+    folder_path = os.getenv("INPUT_FOLDER")
+    output_folder = os.getenv("OUTPUT_PATH")
 
-    # Create folder if not available
-    os.makedirs(temp_folder, exist_ok=True)
+    if not api_key or not folder_path or not output_folder:
+        print("Missing environment variables. Make sure that the .env file is set up correctly.")
+        return
 
-    # Create and start SauceNao instance
-    sauce_nao = SauceNao(api_key, output_folder, temp_folder)
+    # Erstelle und starte die SauceNao-Instanz
+    sauce_nao = SauceNao(api_key, output_folder)
     sauce_nao.process_images_from_folder(folder_path)
 
 if __name__ == "__main__":

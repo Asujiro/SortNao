@@ -14,12 +14,15 @@ class SauceNao:
         self.request_handler = SauceNaoRequest(api_key)
         self.counter = 0
         self.shutdown_Counter = 0
+    
+    # Clean the folder name from special characters
     def clean_folder_name(self, name):
         cleaned_name = re.sub(r'[\\/:*?"<>|()]', '', name)
         cleaned_name = cleaned_name.replace(" ", "_")
         cleaned_name = re.sub(r'_{2,}', '_', cleaned_name)
         return cleaned_name.rstrip('_')
 
+    # Move the image to the target folder
     def move_image(self, image_path, character_name):
         folder_name = "unknown" if character_name == "Unknown character" else self.clean_folder_name(character_name)
         target_folder = os.path.join(self.output_folder, folder_name)
@@ -37,6 +40,7 @@ class SauceNao:
         shutil.move(image_path, target_path)
         print(f"Image moved to: {target_path}")
 
+    # Process the images from the input folder
     def process_images_from_folder(self, folder_path):
         while True:
             image_paths = [os.path.join(folder_path, f) for f in os.listdir(folder_path)
@@ -72,6 +76,7 @@ class SauceNao:
                 exit(0)
             time.sleep(30)
 
+    # Parse the response from the API
     def parse_response(self, response):
         results = response.get('results', [])
         highest_similarity = 0

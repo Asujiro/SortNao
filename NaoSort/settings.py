@@ -14,12 +14,12 @@ def load_env(skip_prompts):
     dotenv.load_dotenv('.env')   # Loads the .env file, if it exists
     
     if not dotenv.find_dotenv('.env'):
-        # .env-Datei existiert nicht, also erstellen
+        # .env file does not exist, so create
         with open(os.path.join(os.getcwd(), ".env"), "w") as file:
-            pass  # Datei nur erstellen, nichts hinzufügen
+            pass  
         enter_settings()
     else:
-        # Wenn alle Variablen vorhanden sind, frage den Benutzer, ob er die Einstellungen ändern möchte
+        # If all variables are present, ask the user if they want to change the settings
         reenter = input("Do you want to reenter your settings? Y/N: ").strip().upper()
         if reenter == 'Y':
             enter_settings()

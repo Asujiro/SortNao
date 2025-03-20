@@ -2,7 +2,8 @@
 A Python program to sort anime images using the SauceNao API
 
 Implemented Features:
-- Sort Images by charakter by batch
+- Sort images by charakter
+- Sort images by batch
 - Automatic Image Conversion to png (It's currently not possible to turn it off.)
 
 

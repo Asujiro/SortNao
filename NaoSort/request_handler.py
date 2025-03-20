@@ -1,5 +1,4 @@
 import requests
-import time
 import shutil
 import os
 from image_utils import convert_to_png
@@ -9,6 +8,7 @@ class SauceNaoRequest:
         self.api_key = api_key
         self.endpoint = endpoint
 
+    # Request the data from the SauceNao API
     def request(self, image_path):
         original_image_path = image_path
         image_path = convert_to_png(image_path) or image_path
@@ -30,7 +30,8 @@ class SauceNaoRequest:
         except Exception as e:
             print(f"Error in the request: {e}")
             return None, image_path
-    
+        
+    # Handle the rate limit of the API request and save the file before exiting
     def handle_rate_limit(self, image_path, original_image_path):
         print("Rate limit reached! saving currend file...")
 

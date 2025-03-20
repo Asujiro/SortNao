@@ -15,13 +15,14 @@ def main():
     api_key = os.getenv("API_KEY")
     folder_path = os.getenv("INPUT_FOLDER")
     output_folder = os.getenv("OUTPUT_PATH")
+    simularity = float(os.getenv("SIMULARITY", "50.0"))
 
     if not api_key or not folder_path or not output_folder:
         print("Missing environment variables. Make sure that the .env file is set up correctly.")
         return
 
     # Erstelle und starte die SauceNao-Instanz
-    sauce_nao = SauceNao(api_key, output_folder)
+    sauce_nao = SauceNao(api_key, output_folder, simularity)
     sauce_nao.process_images_from_folder(folder_path)
 
 if __name__ == "__main__":

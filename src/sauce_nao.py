@@ -6,7 +6,7 @@ from image_utils import is_animated, move_to_gifs_folder
 from request_handler import SauceNaoRequest
 
 class SauceNao:
-    def __init__(self, api_key, output_folder):
+    def __init__(self, api_key, output_folder, simularity):
         self.api_key = api_key
         self.output_folder = output_folder
         self.rate_limit_time = 30
@@ -14,6 +14,7 @@ class SauceNao:
         self.request_handler = SauceNaoRequest(api_key)
         self.counter = 0
         self.shutdown_Counter = 0
+        self.similarity = simularity
     
     # Clean the folder name from special characters
     def clean_folder_name(self, name):

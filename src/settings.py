@@ -41,4 +41,18 @@ def enter_settings():
     print('Enter the path to the folder where you want to move the sorted files:')
     output_path = os.path.normpath(input().strip())
     dotenv.set_key('.env', 'OUTPUT_PATH', output_path)
+    
+
+    while True:
+        try:
+            simularity = float(input('Enter the similarity threshold (0.0 - 100.0): ').strip())
+            if 0.0 <= simularity <= 100.0:
+                dotenv.set_key('.env', 'SIMULARITY', str(simularity))
+
+                break
+            else:
+                print("Invalid range! Please enter a value between 0.0 and 100.0.")
+        except ValueError:
+            print("Invalid input! Please enter a numeric value.")
+    
     dotenv.load_dotenv('.env')  # Load the .env

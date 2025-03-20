@@ -6,10 +6,9 @@ from image_utils import is_animated, move_to_gifs_folder
 from request_handler import SauceNaoRequest
 
 class SauceNao:
-    def __init__(self, api_key, output_folder, temp_folder):
+    def __init__(self, api_key, output_folder):
         self.api_key = api_key
         self.output_folder = output_folder
-        self.temp_folder = temp_folder
         self.rate_limit_time = 30
         self.processed_files = set()
         self.request_handler = SauceNaoRequest(api_key)

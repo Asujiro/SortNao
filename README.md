@@ -11,20 +11,11 @@ Planed Features:
 - Graphical user interface
 - User can set a threshold for image similarity
 - Other sort criterias
-- Set paths and API-Key outside of the code
 
 
 How it works:
-Go ahead and download the files, and then enter the paths for your folders and your Saucenao API key in the NaoSort.py. Once you've done that, save the file, and then go ahead and start the program.
-
-
-
-
-
-
-
-
-
+Go ahead and download the files and install the dependencies, start the program and enter the paths for your folders and your Saucenao API key.
+If you want to run it automatically with Conjob, you can add the argument "--SkipPrompts." But you'll need to configure the .env file, which you can do when you start it manually for the first time.
 
 
 Disclaimer
